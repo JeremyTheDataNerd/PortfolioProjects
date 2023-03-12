@@ -133,24 +133,11 @@ SELECT *,
 FROM NashvilleHousing
 --ORDER BY ParcelID;
 )
+
 SELECT *
 FROM RowNumCTE
 WHERE row_num > 1;
 
-WITH RowNumCTE AS(
-SELECT *, 
-	ROW_NUMBER() OVER (
-	PARTITION BY ParcelID, 
-				 PropertyAddress, 
-				 SalePrice, 
-				 SaleDate, 
-				 LegalReference
-				 ORDER BY
-					UniqueID
-					) row_num
-FROM NashvilleHousing
---ORDER BY ParcelID;
-)
 DELETE
 FROM RowNumCTE
 WHERE row_num > 1;
@@ -163,7 +150,4 @@ FROM NashvilleHousing
 ORDER BY [UniqueID ];
 
 ALTER TABLE NashvilleHousing
-DROP COLUMN OwnerAddress, TaxDistrict, PropertyAddress;
-
-ALTER TABLE NashvilleHousing
-DROP COLUMN SaleDateConverted;
+DROP COLUMN OwnerAddress, TaxDistrict, PropertyAddress, SaleDateConverted;
